@@ -14,7 +14,7 @@ jobs:
         shell: bash -l {0}
     steps:
       - name: Find Comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         id: fc
         with:
           issue-number: ${{ github.event.issue.number }}
@@ -132,7 +132,7 @@ jobs:
           branch: cookbook-gallery-${{ github.event.issue.number }}
 
       - name: Find Comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         id: fc
         with:
           issue-number: ${{ github.event.issue.number }}
