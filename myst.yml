@@ -16,3 +16,6 @@ project:
     - file: root.md
 site:
   template: book-theme
+  options:
+    hide_toc: true
+    hide_outline: true
