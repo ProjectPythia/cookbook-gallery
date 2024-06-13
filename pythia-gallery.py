@@ -32,6 +32,7 @@ def render_cookbook(name: str):
     raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia/{name}/main"
     base_url = f"https://github.com/ProjectPythia/{name}"
     config_url = f"{raw_base_url}/_config.yml"
+    book_url = f"https://projectpythia.org/{name}"
 
     # Load JB data
     data = fetch_yaml(config_url)
@@ -48,7 +49,7 @@ def render_cookbook(name: str):
 
     return {
         "type": "card",
-        "url": base_url,
+        "url": book_url,
         "children": [
             {"type": "cardTitle", "children": [text(title)]},
             div(
