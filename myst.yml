@@ -1,5 +1,7 @@
 # See docs at: https://mystmd.org/guide/frontmatter
 version: 1
+extends:
+  - https://raw.githubusercontent.com/projectpythia-mystmd/pythia-config/main/pythia.yml
 project:
   id: 918580d4-663c-4ef5-93f6-7a8d01d943ed
   title: Project Pythia Cookbook Gallery
