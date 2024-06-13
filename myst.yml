@@ -15,4 +15,4 @@ project:
   toc:
     - file: root.md
 site:
-  template: article-theme
+  template: book-theme
