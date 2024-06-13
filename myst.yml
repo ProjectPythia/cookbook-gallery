@@ -16,12 +16,3 @@ project:
     - file: root.md
 site:
   template: book-theme
-  # title:
-  # options:
-  #   favicon: favicon.ico
-  #   logo: site_logo.png
-  nav: []
-  actions:
-    - title: Learn More
-      url: https://mystmd.org/guide
-  domains: []
