@@ -1,0 +1,21 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 918580d4-663c-4ef5-93f6-7a8d01d943ed
+  title: Project Pythia Cookbook Gallery
+  # description:
+  keywords: []
+  authors: []
+  github: https://github.com/projectpythia-mystmd/cookbook-gallery
+  # bibliography: []
+site:
+  template: book-theme
+  # title:
+  # options:
+  #   favicon: favicon.ico
+  #   logo: site_logo.png
+  nav: []
+  actions:
+    - title: Learn More
+      url: https://mystmd.org/guide
+  domains: []
