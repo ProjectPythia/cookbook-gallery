@@ -1,4 +1,6 @@
-# Project Pythia Cookbook Gallery
+# Cookbooks Gallery
+
+*Only includes Cookbooks from ProjectPythia-MystMD*
 
 Pythia Cookbooks provide example workflows on more advanced and domain-specific problems developed by the Pythia community. Cookbooks build on top of skills you learn in [Pythia Foundations](https://foundations.projectpythia.org/landing-page.html).
 

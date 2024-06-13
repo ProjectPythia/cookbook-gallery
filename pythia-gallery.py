@@ -29,8 +29,8 @@ def fetch_yaml(url: str):
 
 
 def render_cookbook(name: str):
-    raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia/{name}/main"
-    base_url = f"https://github.com/ProjectPythia/{name}"
+    raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
+    base_url = f"https://github.com/ProjectPythia-MystMD/{name}"
     config_url = f"{raw_base_url}/_config.yml"
     book_url = f"https://projectpythia.org/{name}"
 
@@ -73,10 +73,8 @@ def render_cookbook(name: str):
 
 
 def render_cookbooks(pool):
-    with urllib.request.urlopen(
-        "https://raw.githubusercontent.com/ProjectPythia/cookbook-gallery/main/site/cookbook_gallery.txt"
-    ) as response:
-        body = response.read().decode()
+    with open("cookbook_gallery.txt") as f:
+        body = f.read()
 
     return [*pool.map(render_cookbook, body.splitlines())]
 
