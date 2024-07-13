@@ -3,3 +3,4 @@ radar-cookbook
 advanced-viz-cookbook
 unstructured-grid-viz-cookbook
 eofs-cookbook
+web-map-feature-services-cookbook
