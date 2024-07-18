@@ -1,8 +1,7 @@
-import { spawn } from 'node:child_process';
-
+import { spawn } from "node:child_process";
 
 /**
- * Call out to an external process that conforms to a JSON-based 
+ * Call out to an external process that conforms to a JSON-based
  * stdin-stdout transform specification.
  *
  * @param opts transform options, containing the binary path and arguments
@@ -50,23 +49,23 @@ function externalTransform(opts) {
 }
 
 const cookbooksTransform = () =>
-  externalTransform({ executable: 'python3', args: ['pythia-gallery.py'] });
+  externalTransform({ executable: "python3", args: ["pythia-gallery.py"] });
 
 const pythiaGalleryDirective = {
-  name: 'pythia-cookbooks',
-  doc: 'An example directive for embedding a Pythia cookbook gallery.',
+  name: "pythia-cookbooks",
+  doc: "An example directive for embedding a Pythia cookbook gallery.",
   run() {
-    const img = { type: 'pythia-cookbooks', children: [] };
+    const img = { type: "pythia-cookbooks", children: [] };
     return [img];
   },
 };
 const pythiaGalleryTransform = {
   plugin: cookbooksTransform,
-  stage: 'document',
+  stage: "document",
 };
 
 const plugin = {
-  name: 'Pythia Gallery',
+  name: "Pythia Gallery",
   directives: [pythiaGalleryDirective],
   transforms: [pythiaGalleryTransform],
 };
