@@ -3,6 +3,7 @@ import json
 import urllib.request
 import yaml
 import concurrent.futures
+import traceback
 
 from unist import *
 
@@ -23,60 +24,65 @@ styles = {
 
 
 def fetch_yaml(url: str):
+    print(f"Fetching {url}", file=sys.stderr, flush=True)
     with urllib.request.urlopen(url) as response:
         body = response.read().decode()
     return yaml.load(body, yaml.SafeLoader)
 
 
 def render_cookbook(name: str):
-    raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
-    base_url = f"https://github.com/ProjectPythia-MystMD/{name}"
-    config_url = f"{raw_base_url}/_config.yml"
-    book_url = f"https://projectpythia-mystmd.github.io/{name}"
+    try:
+        print(f"Rendering {name}", file=sys.stderr, flush=True)
+        raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
+        config_url = f"{raw_base_url}/myst.yml"
+        book_url = f"https://projectpythia-mystmd.github.io/{name}"
 
-    # Load JB data
-    data = fetch_yaml(config_url)
-    title = data["title"]
+        # Load JB data
+        config = fetch_yaml(config_url)
+        title = config["project"]["title"]
 
-    # Fetch gallery metadata
-    gallery_url = f"{raw_base_url}/_gallery_info.yml"
-    gallery_data = fetch_yaml(gallery_url)
-    image_name = gallery_data["thumbnail"]
-    image_url = f"{raw_base_url}/{image_name}"
+        # Fetch gallery metadata
+        gallery_url = f"{raw_base_url}/_gallery_info.yml"
+        gallery_data = fetch_yaml(gallery_url)
+        image_name = gallery_data["thumbnail"]
+        image_url = f"{raw_base_url}/{image_name}"
 
-    # Build tags
-    tags = gallery_data["tags"]
+        # Build tags
+        tags = gallery_data["tags"]
 
-    return {
-        "type": "card",
-        "url": book_url,
-        "children": [
-            {"type": "cardTitle", "children": [text(title)]},
-            div(
-                [
-                    image(image_url),
-                    div(
-                        [
-                            span(
-                                [text(item)],
-                                style=styles.get(name, DEFAULT_STYLE),
-                            )
-                            for name, items in tags.items()
-                            if items is not None
-                            for item in items
-                        ]
-                    ),
-                ],
-            ),
-        ],
-    }
-
+        return {
+            "type": "card",
+            "url": book_url,
+            "children": [
+                {"type": "cardTitle", "children": [text(title)]},
+                div(
+                    [
+                        image(image_url),
+                        div(
+                            [
+                                span(
+                                    [text(item)],
+                                    style=styles.get(name, DEFAULT_STYLE),
+                                )
+                                for name, items in tags.items()
+                                if items is not None
+                                for item in items
+                            ]
+                        ),
+                    ],
+                ),
+            ],
+        }
+    except Exception as err:
+        print(f"\n\nError rendering {name}", file=sys.stderr)
+        traceback.print_exception(err, file=sys.stderr)
+        return None
 
 def render_cookbooks(pool):
     with open("cookbook_gallery.txt") as f:
         body = f.read()
 
-    return [*pool.map(render_cookbook, body.splitlines())]
+    return [c for c in pool.map(render_cookbook, body.splitlines()) if c is not None]
 
 
 if __name__ == "__main__":
