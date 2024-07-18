@@ -17,17 +17,31 @@ function externalTransform(opts) {
     subprocess.stdin.end();
 
     // Read out the response in chunks
-    const buffers = [];
-    subprocess.stdout.on('data', (chunk) => {
-      buffers.push(chunk);
+    const stdoutBuffers = [];
+    subprocess.stdout.on("data", (chunk) => {
+      stdoutBuffers.push(chunk);
+    });
+    const stderrBuffers = [];
+    subprocess.stderr.on("data", (chunk) => {
+      stderrBuffers.push(chunk);
     });
 
     // Await exit
-    await new Promise((resolve) => {
-      subprocess.on('close', resolve);
+    const exitCode = await new Promise((resolve) => {
+      subprocess.on("close", (code) => resolve(code));
     });
+    if (exitCode) {
+      const stderr = Buffer.concat(stderrBuffers).toString();
+      throw new Error(
+        `Non-zero error code while running pythia-gallery'\n\n${stderr}`,
+      );
+    } else if (stderrBuffers.length) {
+      const stderr = Buffer.concat(stderrBuffers).toString();
+      // Log the error
+      console.debug(`\n\n${stderr}\n\n`);
+    }
     // Concatenate the responses
-    const stdout = Buffer.concat(buffers).toString();
+    const stdout = Buffer.concat(stdoutBuffers).toString();
 
     // Modify the tree in-place
     const result = JSON.parse(stdout);
