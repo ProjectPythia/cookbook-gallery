@@ -11,7 +11,8 @@ project:
   github: https://github.com/projectpythia-mystmd/cookbook-gallery
   # bibliography: []
   plugins:
-    - pythia-gallery.mjs
+    - type: executable
+      path: pythia-gallery.py
   toc:
     - file: root.md
 site:
