@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
 import sys
 import json
 import urllib.request
 import yaml
 import concurrent.futures
 import traceback
+import argparse
 
 from unist import *
 
@@ -33,7 +35,9 @@ def fetch_yaml(url: str):
 def render_cookbook(name: str):
     try:
         print(f"Rendering {name}", file=sys.stderr, flush=True)
-        raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
+        raw_base_url = (
+            f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
+        )
         config_url = f"{raw_base_url}/myst.yml"
         book_url = f"https://projectpythia-mystmd.github.io/{name}"
 
@@ -78,6 +82,7 @@ def render_cookbook(name: str):
         traceback.print_exception(err, file=sys.stderr)
         return None
 
+
 def render_cookbooks(pool):
     with open("cookbook_gallery.txt") as f:
         body = f.read()
@@ -85,14 +90,15 @@ def render_cookbooks(pool):
     return [c for c in pool.map(render_cookbook, body.splitlines()) if c is not None]
 
 
-if __name__ == "__main__":
-    with concurrent.futures.ThreadPoolExecutor() as pool:
-        # Parse the AST as JSON on stdin
-        data = sys.stdin.read()
-        ast = json.loads(data)
+def run_directive(name, data):
+    assert name == "pythia-cookbooks"
+    return [{"type": "pythia-cookbooks", "children": []}]
 
+
+def run_transform(name, data):
+    with concurrent.futures.ThreadPoolExecutor() as pool:
         # Find our cookbook nodes in the AST
-        cookbook_nodes = find_all_by_type(ast, "pythia-cookbooks")
+        cookbook_nodes = find_all_by_type(data, "pythia-cookbooks")
 
         # In-place mutate the AST to replace cookbook nodes with card grids
         children = render_cookbooks(pool)
@@ -103,5 +109,39 @@ if __name__ == "__main__":
             node.update(grid([1, 1, 2, 3], children))
             node["children"] = children
 
-        # Write back to stdout!
-        print(json.dumps(ast))
+    return data
+
+
+pythiaGalleryDirective = {
+    "name": "pythia-cookbooks",
+    "doc": "An example directive for embedding a Pythia cookbook gallery.",
+}
+pythiaGalleryTransform = {
+    "stage": "document",
+}
+
+PLUGIN_SPEC = {
+    "name": "Pythia Gallery",
+    "directives": [pythiaGalleryDirective],
+    "transforms": [pythiaGalleryTransform],
+}
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--role")
+    group.add_argument("--directive")
+    group.add_argument("--transform")
+    args = parser.parse_args()
+
+    if args.directive:
+        data = json.load(sys.stdin)
+        json.dump(run_directive(args.directive, data), sys.stdout)
+    elif args.transform:
+        data = json.load(sys.stdin)
+        json.dump(run_transform(args.transform, data), sys.stdout)
+    elif args.role:
+        raise NotImplementedError
+    else:
+        json.dump(PLUGIN_SPEC, sys.stdout)
