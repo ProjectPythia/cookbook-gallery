@@ -4,3 +4,4 @@ advanced-viz-cookbook
 unstructured-grid-viz-cookbook
 eofs-cookbook
 web-map-feature-services-cookbook
+cesm-lens-aws-cookbook
