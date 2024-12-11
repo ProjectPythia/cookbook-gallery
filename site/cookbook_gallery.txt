@@ -17,3 +17,4 @@ unstructured-grid-viz-cookbook
 na-cordex-viz-cookbook
 eofs-cookbook
 ocean-bgc-cookbook
+paleoPCA-cookbook
