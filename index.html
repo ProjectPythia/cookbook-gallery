@@ -16,19 +16,17 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!--
-    this give us a css class that will be invisible only if js is disabled
-  -->
-  <noscript>
-    <style>
-      .pst-js-only { display: none !important; }
-
-    </style>
-  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-pythia-theme.min.css?v=ba7ce088" />
@@ -36,11 +34,10 @@
     <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="_static/custom.css?v=81d66b39" />
   
-  <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="_static/documentation_options.js?v=9eb32ce0"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
@@ -67,8 +64,7 @@
     <link rel="search" title="Search" href="search.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="" />
-    <meta name="docbuild:last-update" content="10 January 2025"/>
+    <meta name="docbuild:last-update" content="11 March 2025"/>
   </head>
   
   
@@ -107,7 +103,7 @@
     
     
     <img src="_static/pythia_logo-white-rtext.svg" class="logo__image only-light" alt=" - Home"/>
-    <img src="_static/pythia_logo-white-rtext.svg" class="logo__image only-dark pst-js-only" alt=" - Home"/>
+    <script>document.write(`<img src="_static/pythia_logo-white-rtext.svg" class="logo__image only-dark" alt=" - Home"/>`);</script>
   
   
 </a></div>
@@ -241,7 +237,7 @@
 <span class="sd-summary-text">domains</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg aria-hidden="true" class="sd-octicon sd-octicon-chevron-right" height="1.5em" version="1.1" viewbox="0 0 24 24" width="1.5em"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <div class="dropdown">
 <ul>
-<li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="d-visualizations" type="checkbox"/> 3D Visualizations</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="aws-cloud" type="checkbox"/> AWS Cloud</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="atmosphere" type="checkbox"/> Atmosphere</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="basemaps" type="checkbox"/> Basemaps</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="climate" type="checkbox"/> Climate</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="climate-model" type="checkbox"/> Climate Model</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="climate-modeling" type="checkbox"/> Climate Modeling</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="data-access" type="checkbox"/> Data Access</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="data-science" type="checkbox"/> Data Science</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="fourier-transform" type="checkbox"/> Fourier Transform</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="gis" type="checkbox"/> GIS</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="geospatial" type="checkbox"/> Geospatial</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="geospatial-data" type="checkbox"/> Geospatial Data</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="hrrr-model" type="checkbox"/> HRRR Model</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="intake" type="checkbox"/> Intake</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="interactive-visualization" type="checkbox"/> Interactive-Visualization</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="land-model" type="checkbox"/> Land Model</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="machine-learning" type="checkbox"/> Machine Learning</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="meteorology" type="checkbox"/> Meteorology</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="ml" type="checkbox"/> Ml</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="nasa-earthdata-gibs" type="checkbox"/> NASA EarthData GIBS</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="nsf-jetstream2" type="checkbox"/> NSF JetStream2</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="oceanography" type="checkbox"/> Oceanography</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="paleoclimatology" type="checkbox"/> Paleoclimatology</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="particles" type="checkbox"/> Particles</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="radar" type="checkbox"/> Radar</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="satellite" type="checkbox"/> Satellite</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="satellite-imagery" type="checkbox"/> Satellite Imagery</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="scientific-software-engineering" type="checkbox"/> Scientific Software Engineering</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="sentinel-2" type="checkbox"/> Sentinel-2</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="signal-analysis" type="checkbox"/> Signal Analysis</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="spatial-analysis" type="checkbox"/> Spatial Analysis</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="sustainability" type="checkbox"/> Sustainability</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="visualization" type="checkbox"/> Visualization</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="wavelet" type="checkbox"/> Wavelet</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="weather" type="checkbox"/> Weather</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="zarr" type="checkbox"/> Zarr</label></li>
+<li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="d-visualizations" type="checkbox"/> 3D Visualizations</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="aws-cloud" type="checkbox"/> AWS Cloud</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="atmosphere" type="checkbox"/> Atmosphere</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="basemaps" type="checkbox"/> Basemaps</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="climate" type="checkbox"/> Climate</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="climate-model" type="checkbox"/> Climate Model</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="climate-modeling" type="checkbox"/> Climate Modeling</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="data-access" type="checkbox"/> Data Access</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="data-science" type="checkbox"/> Data Science</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="earth-observation" type="checkbox"/> Earth-Observation</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="fourier-transform" type="checkbox"/> Fourier Transform</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="gis" type="checkbox"/> GIS</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="geospatial" type="checkbox"/> Geospatial</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="geospatial-data" type="checkbox"/> Geospatial Data</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="hrrr-model" type="checkbox"/> HRRR Model</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="intake" type="checkbox"/> Intake</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="interactive-visualization" type="checkbox"/> Interactive-Visualization</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="land-model" type="checkbox"/> Land Model</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="machine-learning" type="checkbox"/> Machine Learning</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="meteorology" type="checkbox"/> Meteorology</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="microwave-remote-sensing" type="checkbox"/> Microwave-Remote-Sensing</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="ml" type="checkbox"/> Ml</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="nasa-earthdata-gibs" type="checkbox"/> NASA EarthData GIBS</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="nsf-jetstream2" type="checkbox"/> NSF JetStream2</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="oceanography" type="checkbox"/> Oceanography</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="paleoclimatology" type="checkbox"/> Paleoclimatology</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="particles" type="checkbox"/> Particles</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="radar" type="checkbox"/> Radar</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="remote-sensing" type="checkbox"/> Remote-Sensing</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="satellite" type="checkbox"/> Satellite</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="satellite-imagery" type="checkbox"/> Satellite Imagery</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="scientific-software-engineering" type="checkbox"/> Scientific Software Engineering</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="sentinel-1" type="checkbox"/> Sentinel-1</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="sentinel-2" type="checkbox"/> Sentinel-2</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="signal-analysis" type="checkbox"/> Signal Analysis</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="spatial-analysis" type="checkbox"/> Spatial Analysis</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="stac" type="checkbox"/> Stac</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="sustainability" type="checkbox"/> Sustainability</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="visualization" type="checkbox"/> Visualization</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="wavelet" type="checkbox"/> Wavelet</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="weather" type="checkbox"/> Weather</label></li><li><label class="dropdown-item checkbox domains"><input onchange="change();" rel="zarr" type="checkbox"/> Zarr</label></li>
 </ul>
 </div>
 </div>
@@ -259,7 +255,7 @@
 <span class="sd-summary-text">packages</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg aria-hidden="true" class="sd-octicon sd-octicon-chevron-right" height="1.5em" version="1.1" viewbox="0 0 24 24" width="1.5em"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
 <div class="dropdown">
 <ul>
-<li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="cartopy" type="checkbox"/> Cartopy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="dask" type="checkbox"/> Dask</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="datashader" type="checkbox"/> Datashader</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="eofs" type="checkbox"/> Eofs</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="geocat-datafiles" type="checkbox"/> Geocat-Datafiles</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="geocat-viz" type="checkbox"/> Geocat-Viz</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="geoviews" type="checkbox"/> Geoviews</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="holoviews" type="checkbox"/> Holoviews</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="hvplot" type="checkbox"/> HvPlot</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="hvplot" type="checkbox"/> Hvplot</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="ipython" type="checkbox"/> IPython</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake" type="checkbox"/> Intake</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-esgf" type="checkbox"/> Intake-Esgf</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-esm" type="checkbox"/> Intake-Esm</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-markdown" type="checkbox"/> Intake-Markdown</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-xarray" type="checkbox"/> Intake-Xarray</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="kerchunk" type="checkbox"/> Kerchunk</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="matplotlib" type="checkbox"/> Matplotlib</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="metpy" type="checkbox"/> Metpy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="numpy" type="checkbox"/> Numpy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="odc.stac" type="checkbox"/> Odc.Stac</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="owslib" type="checkbox"/> Owslib</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pandas" type="checkbox"/> Pandas</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="panel" type="checkbox"/> Panel</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="planetary-computer" type="checkbox"/> Planetary-Computer</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="py-art" type="checkbox"/> Py-Art</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pyleoclim" type="checkbox"/> Pyleoclim</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pyresample" type="checkbox"/> Pyresample</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pywavelets" type="checkbox"/> Pywavelets</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="scipy" type="checkbox"/> Scipy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="seaborn" type="checkbox"/> Seaborn</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="tensorflow" type="checkbox"/> Tensorflow</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="vapor" type="checkbox"/> Vapor</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="verde" type="checkbox"/> Verde</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xesmf" type="checkbox"/> XESMF</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xarray" type="checkbox"/> Xarray</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xbatcher" type="checkbox"/> Xbatcher</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xeofs" type="checkbox"/> Xeofs</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xesmf" type="checkbox"/> Xesmf</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xradar" type="checkbox"/> Xradar</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="zarr" type="checkbox"/> Zarr</label></li>
+<li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="cartopy" type="checkbox"/> Cartopy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="dask" type="checkbox"/> Dask</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="datashader" type="checkbox"/> Datashader</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="eofs" type="checkbox"/> Eofs</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="geocat-datafiles" type="checkbox"/> Geocat-Datafiles</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="geocat-viz" type="checkbox"/> Geocat-Viz</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="geoviews" type="checkbox"/> Geoviews</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="holoviews" type="checkbox"/> Holoviews</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="hvplot" type="checkbox"/> HvPlot</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="hvplot" type="checkbox"/> Hvplot</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="ipython" type="checkbox"/> IPython</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake" type="checkbox"/> Intake</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-esgf" type="checkbox"/> Intake-Esgf</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-esm" type="checkbox"/> Intake-Esm</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-markdown" type="checkbox"/> Intake-Markdown</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="intake-xarray" type="checkbox"/> Intake-Xarray</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="kerchunk" type="checkbox"/> Kerchunk</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="matplotlib" type="checkbox"/> Matplotlib</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="metpy" type="checkbox"/> Metpy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="numpy" type="checkbox"/> Numpy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="odc-stac" type="checkbox"/> Odc-Stac</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="odc.stac" type="checkbox"/> Odc.Stac</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="owslib" type="checkbox"/> Owslib</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pandas" type="checkbox"/> Pandas</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="panel" type="checkbox"/> Panel</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="planetary-computer" type="checkbox"/> Planetary-Computer</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="py-art" type="checkbox"/> Py-Art</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pyleoclim" type="checkbox"/> Pyleoclim</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pyresample" type="checkbox"/> Pyresample</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pystac-client" type="checkbox"/> Pystac-Client</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="pywavelets" type="checkbox"/> Pywavelets</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="rioxarray" type="checkbox"/> Rioxarray</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="scipy" type="checkbox"/> Scipy</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="seaborn" type="checkbox"/> Seaborn</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="tensorflow" type="checkbox"/> Tensorflow</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="vapor" type="checkbox"/> Vapor</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="verde" type="checkbox"/> Verde</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xesmf" type="checkbox"/> XESMF</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xarray" type="checkbox"/> Xarray</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xbatcher" type="checkbox"/> Xbatcher</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xeofs" type="checkbox"/> Xeofs</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xesmf" type="checkbox"/> Xesmf</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="xradar" type="checkbox"/> Xradar</label></li><li><label class="dropdown-item checkbox packages"><input onchange="change();" rel="zarr" type="checkbox"/> Zarr</label></li>
 </ul>
 </div>
 </div>
@@ -717,7 +713,7 @@
 <span class="badge bg-primary mybadges">Visualization</span>
 <div>
 <a class="reference external" href="https://github.com/ProjectPythia/advanced-viz-cookbook/actions/workflows/nightly-build.yaml"><img alt="nightly-build" src="https://github.com/ProjectPythia/advanced-viz-cookbook/actions/workflows/nightly-build.yaml/badge.svg"/></a>
-<a class="reference external" href="https://binder.pythia.2i2c.cloud/v2/gh/ProjectPythia/advanced-viz-cookbook.git/main"><img alt="Binder" src="https://binder.pythia.2i2c.cloud/badge_logo.svg"/></a>
+<a class="reference external" href="https://binder.projectpythia.org/v2/gh/ProjectPythia/advanced-viz-cookbook.git/main"><img alt="Binder" src="https://binder.projectpythia.org/badge_logo.svg"/></a>
 <a class="reference external" href="https://zenodo.org/badge/latestdoi/671205314"><img alt="DOI" src="https://zenodo.org/badge/671205314.svg"/></a>
 </div>
 </div>
@@ -950,6 +946,58 @@
 </div>
 </div>
 </div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-md tagged-card earth-observation holoviews microwave-remote-sensing odc-stac pystac-client remote-sensing rioxarray sentinel-1 stac xarray docutils">
+<div class="sd-card-body docutils">
+<div class="d-flex gallery-card">
+<img class="gallery-thumbnail" src="https://raw.githubusercontent.com/ProjectPythia/eo-datascience-cookbook/main/notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png"/>
+<div class="container">
+<a class="text-decoration-none" href="https://projectpythia.org/eo-datascience-cookbook/README.html"><h4 class="display-4 p-0">Earth Observation Data Science Cookbook</h4></a>
+<p class="card-subtitle"><strong>Author:</strong> Wolfgang Wagner, Martin Schobben, Nikolas Pikall, Joseph Wagner, Davide Festa, Felix David Reuß, Luka Jovic, Earth Observation Data Science contributors</p>
+<p class="my-2">Earth Observation Data Science Cookbook provides training material centered around Earth Observation data while honoring the Pangeo Philosophy. The examples used in the notebooks represent some of the main research lines of the Remote Sensing Unit at the Department of Geodesy and Geoinformation at the<a class="modal-btn"> ... more</a> </p>
+</div>
+</div>
+<div class="modal">
+<div class="content">
+<img class="modal-img" src="https://raw.githubusercontent.com/ProjectPythia/eo-datascience-cookbook/main/notebooks/images/logos/tuw-geo_eodc_logo_horizontal.png"/>
+<h3 class="display-3">Earth Observation Data Science Cookbook</h3>
+<strong>Author:</strong> Wolfgang Wagner, Martin Schobben, Nikolas Pikall, Joseph Wagner, Davide Festa, Felix David Reuß, Luka Jovic, Earth Observation Data Science contributors
+<p class="my-2">Earth Observation Data Science Cookbook provides training material centered around Earth Observation data while honoring the Pangeo Philosophy. The examples used in the notebooks represent some of the main research lines of the Remote Sensing Unit at the Department of Geodesy and Geoinformation at the TU Wien (Austria). In addition, the content familiarizes the reader with the data available at the EODC (Earth Observation Data Centre For Water Resources Monitoring) as well as the computational resources to process large amounts of data.</p>
+<p class="my-2"><span class="badge bg-primary mybadges">Earth-Observation</span>
+<span class="badge bg-primary mybadges">Holoviews</span>
+<span class="badge bg-primary mybadges">Microwave-Remote-Sensing</span>
+<span class="badge bg-primary mybadges">Odc-Stac</span>
+<span class="badge bg-primary mybadges">Pystac-Client</span>
+<span class="badge bg-primary mybadges">Remote-Sensing</span>
+<span class="badge bg-primary mybadges">Rioxarray</span>
+<span class="badge bg-primary mybadges">Sentinel-1</span>
+<span class="badge bg-primary mybadges">Stac</span>
+<span class="badge bg-primary mybadges">Xarray</span></p>
+<p class="mt-3 mb-0"><a class="btn btn-outline-primary btn-block" href="https://projectpythia.org/eo-datascience-cookbook/README.html">Visit Website</a></p>
+</div>
+</div>
+</div>
+<div class="sd-card-footer card-footer docutils">
+<div class="tagsandbadges">
+<span class="badge bg-primary mybadges">Earth-Observation</span>
+<span class="badge bg-primary mybadges">Holoviews</span>
+<span class="badge bg-primary mybadges">Microwave-Remote-Sensing</span>
+<span class="badge bg-primary mybadges">Odc-Stac</span>
+<span class="badge bg-primary mybadges">Pystac-Client</span>
+<span class="badge bg-primary mybadges">Remote-Sensing</span>
+<span class="badge bg-primary mybadges">Rioxarray</span>
+<span class="badge bg-primary mybadges">Sentinel-1</span>
+<span class="badge bg-primary mybadges">Stac</span>
+<span class="badge bg-primary mybadges">Xarray</span>
+<div>
+<a class="reference external" href="https://github.com/ProjectPythia/eo-datascience-cookbook/actions/workflows/nightly-build.yaml"><img alt="nightly-build" src="https://github.com/ProjectPythia/eo-datascience-cookbook/actions/workflows/nightly-build.yaml/badge.svg"/></a>
+<a class="reference external" href="https://binder.projectpythia.org/v2/gh/ProjectPythia/eo-datascience-cookbook.git/main"><img alt="Binder" src="https://binder.projectpythia.org/badge_logo.svg"/></a>
+<a class="reference external" href="https://zenodo.org/badge/latestdoi/830421828"><img alt="DOI" src="https://zenodo.org/badge/830421828.svg"/></a>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="modal-backdrop"></div>
 <script src="../html/_static/custom.js"></script>
 </div>
@@ -966,8 +1014,8 @@
   </div>
     
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
-<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
 
   <footer class="bd-footer">
      
@@ -1037,7 +1085,7 @@
         
           By the <a href="https://projectpythia.org/">Project Pythia</a> Community.
         
-          Last updated on 10 January 2025.
+          Last updated on 11 March 2025.
         </p>
       </div>
     </div>
