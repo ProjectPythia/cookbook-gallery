@@ -8,5 +8,18 @@ Cookbooks are created from Jupyter Notebooks that we strive to binderize so each
 
 Interested in contributing a new Cookbook or contributing to an existing Cookbook? Great! Please see the [Project Pythia Cookbook Contributor's Guide](https://projectpythia.org/cookbook-guide.html), and consider opening a discussion under the [Project Pythia category of the Pangeo Discourse](https://discourse.pangeo.io/c/education/project-pythia/60).
 
+<div class="dropdown-container">
+    <label for="domain-dropdown">Domain</label>
+    <select id="domain-dropdown">
+        <option value="">All</option>
+        <!-- Dropdown options dynamically added by JS -->
+    </select>
+
+    <label for="package-dropdown">Package</label>
+    <select id="package-dropdown">
+        <option value="">All</option>
+    </select>
+</div>
+
 ::: {pythia-cookbooks}
 :::

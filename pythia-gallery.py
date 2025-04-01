@@ -32,44 +32,58 @@ def fetch_yaml(url: str):
     return yaml.load(body, yaml.SafeLoader)
 
 
-def render_cookbook(name: str):
+def fetch_cookbook_data(name):
+    """Fetch and return cookbook metadata from myst.yml and _gallery_info.yml."""
     try:
-        print(f"Rendering {name}", file=sys.stderr, flush=True)
-        raw_base_url = (
-            f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
-        )
-        config_url = f"{raw_base_url}/myst.yml"
-        book_url = f"https://projectpythia-mystmd.github.io/{name}"
+        print(f"Fetching metadata for {name}", file=sys.stderr, flush=True)
+        raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
 
-        # Load JB data
+        # Load myst.yml
+        config_url = f"{raw_base_url}/myst.yml"
         config = fetch_yaml(config_url)
         title = config["project"]["title"]
 
-        # Fetch gallery metadata
+        # Load _gallery_info.yml
         gallery_url = f"{raw_base_url}/_gallery_info.yml"
         gallery_data = fetch_yaml(gallery_url)
-        image_name = gallery_data["thumbnail"]
-        image_url = f"{raw_base_url}/{image_name}"
 
-        # Build tags
-        tags = gallery_data["tags"]
+        # Extract image details and tags
+        image_url = f"{raw_base_url}/{gallery_data['thumbnail']}"
+        tags = gallery_data.get("tags", {})
 
         return {
+            "title": title,
+            "book_url": f"https://projectpythia-mystmd.github.io/{name}",
+            "image_url": image_url,
+            "tags": tags,  # Dictionary of {"domains": [...], "packages": [...]}
+        }
+
+    except Exception as err:
+        print(f"Error fetching data for {name}", file=sys.stderr)
+        traceback.print_exception(err, file=sys.stderr)
+        return None
+
+
+def render_cookbook(name, data):
+    """Render a cookbook card from fetched metadata."""
+    try:
+        print(f"Rendering {name}", file=sys.stderr, flush=True)
+        return {
             "type": "card",
-            "url": book_url,
+            "url": data["book_url"],
+            "class": ["tagged-card"] + [item for _, items in data["tags"].items() for item in items],
             "children": [
-                {"type": "cardTitle", "children": [text(title)]},
+                {"type": "cardTitle", "children": [text(data["title"])]},
                 div(
                     [
-                        image(image_url),
+                        image(data["image_url"]),
                         div(
                             [
                                 span(
                                     [text(item)],
-                                    style=styles.get(name, DEFAULT_STYLE),
+                                    style=styles.get(category, DEFAULT_STYLE),
                                 )
-                                for name, items in tags.items()
-                                if items is not None
+                                for category, items in data["tags"].items() if items
                                 for item in items
                             ]
                         ),
@@ -85,9 +99,40 @@ def render_cookbook(name: str):
 
 def render_cookbooks(pool):
     with open("cookbook_gallery.txt") as f:
-        body = f.read()
+        body = f.read().splitlines()
 
-    return [c for c in pool.map(render_cookbook, body.splitlines()) if c is not None]
+    # Fetch all cookbook data in parallel
+    cookbook_entries = list(pool.map(fetch_cookbook_data, body))
+
+    cookbook_data = {}
+    tag_lists = {"domains": set(), "packages": set()}
+
+    for name, data in zip(body, cookbook_entries):
+        if data:
+            cookbook_data[name] = render_cookbook(name, data)  # Use pre-fetched data
+            
+            # Collect tags into tag_lists
+            for category in tag_lists.keys():
+                tag_lists[category].update(data["tags"].get(category, []))
+
+    # Create dropdown HTML
+    dropdown_html = f"""
+    <div class="dropdown-container">
+        <label for="domain-dropdown">Filter by Domain</label>
+        <select id="domain-dropdown">
+            <option value="">All</option>
+            {"".join([f'<option value="{tag}">{tag}</option>' for tag in sorted(tag_lists["domains"])])}
+        </select>
+
+        <label for="package-dropdown">Filter by Package</label>
+        <select id="package-dropdown">
+            <option value="">All</option>
+            {"".join([f'<option value="{tag}">{tag}</option>' for tag in sorted(tag_lists["packages"])])}
+        </select>
+    </div>
+    """
+
+    return dropdown_html, cookbook_data, {key: sorted(value) for key, value in tag_lists.items()}
 
 
 def run_directive(name, data):
