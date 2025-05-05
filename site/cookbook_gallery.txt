@@ -21,3 +21,4 @@ paleoPCA-cookbook
 esgf-cookbook
 wavelet-cookbook
 eo-datascience-cookbook
+healpix-cookbook
