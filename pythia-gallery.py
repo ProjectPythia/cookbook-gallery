@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import sys
 import json
 import urllib.request
@@ -115,24 +115,37 @@ def render_cookbooks(pool):
             for category in tag_lists.keys():
                 tag_lists[category].update(data["tags"].get(category, []))
 
-    # Create dropdown HTML
-    dropdown_html = f"""
-    <div class="dropdown-container">
-        <label for="domain-dropdown">Filter by Domain</label>
-        <select id="domain-dropdown">
-            <option value="">All</option>
-            {"".join([f'<option value="{tag}">{tag}</option>' for tag in sorted(tag_lists["domains"])])}
-        </select>
+    # You can also generate your cookbook cards as AST nodes here
+    cookbook_nodes = [cookbook_data[name] for name in body if name in cookbook_data]
 
-        <label for="package-dropdown">Filter by Package</label>
-        <select id="package-dropdown">
-            <option value="">All</option>
-            {"".join([f'<option value="{tag}">{tag}</option>' for tag in sorted(tag_lists["packages"])])}
-        </select>
-    </div>
-    """
+        # Generate checkboxes for domains
+    domains_html = (
+        "<div class='domains'><strong>Filter by Domain:</strong> " +
+        "".join(
+            f'<label><input type="checkbox" rel="{tag}"> {tag}</label> '
+            for tag in sorted(tag_lists["domains"])
+        ) +
+        "</div>"
+    )
 
-    return dropdown_html, cookbook_data, {key: sorted(value) for key, value in tag_lists.items()}
+    # Generate checkboxes for packages
+    packages_html = (
+        "<div class='packages'><strong>Filter by Package:</strong> " +
+        "".join(
+            f'<label><input type="checkbox" rel="{tag}"> {tag}</label> '
+            for tag in sorted(tag_lists["packages"])
+        ) +
+        "</div>"
+    )
+
+    controls_node = {
+        "type": "container",
+        "children": [
+            {"type": "html", "value": domains_html + packages_html}
+        ]
+    }
+    cookbook_nodes = [cookbook_data[name] for name in body if name in cookbook_data]
+    return controls_node, cookbook_nodes
 
 
 def run_directive(name, data):
@@ -142,18 +155,13 @@ def run_directive(name, data):
 
 def run_transform(name, data):
     with concurrent.futures.ThreadPoolExecutor() as pool:
-        # Find our cookbook nodes in the AST
         cookbook_nodes = find_all_by_type(data, "pythia-cookbooks")
-
-        # In-place mutate the AST to replace cookbook nodes with card grids
-        children = render_cookbooks(pool)
-
-        # Mutate our cookbook nodes in-place
+        controls_node, card_nodes = render_cookbooks(pool)
+        grid_node = grid([1, 1, 2, 3], card_nodes)
         for node in cookbook_nodes:
             node.clear()
-            node.update(grid([1, 1, 2, 3], children))
-            node["children"] = children
-
+            node["type"] = "container"
+            node["children"] = [controls_node, grid_node]
     return data
 
 

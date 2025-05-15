@@ -22,5 +22,5 @@ site:
     hide_outline: true
 html:
   extra_head:
-    - <script src="_static/gallery-filter.js"></script>
+    - <script src="_static/custom.js"></script>
 
