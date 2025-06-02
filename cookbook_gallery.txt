@@ -5,3 +5,11 @@ unstructured-grid-viz-cookbook
 eofs-cookbook
 web-map-feature-services-cookbook
 cesm-lens-aws-cookbook
+metpy-cookbook
+dask-cookbook
+cmip6-cookbook
+vapor-python-cookbook
+wavelet-cookbook
+landsat-ml-cookbook
+ocean-bgc-cookbook
+ERA5_interactive-cookbook
