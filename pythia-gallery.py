@@ -124,17 +124,11 @@ def render_cookbooks(pool):
             *[
                 div(
                     [
-                        {
-                            "type": "element",
-                            "tag": "input",
-                            "properties": {
-                                "type": "checkbox",
-                                "rel": tag
-                            }
-                        },
+                        #        f'<input type="checkbox" rel="{tag}">, ' {tag}'
+                        #       text(f" -[] {tag}")
                         text(f" {tag}")
                     ],
-                    style=styles.get(category, DEFAULT_STYLE)
+                    style=styles['domains']
                 )
                 for tag in sorted(tag_lists["domains"])
             ]
@@ -149,18 +143,10 @@ def render_cookbooks(pool):
             *[
                 div(
                     [
-                        {
-                            "type": "element",
-                            "tag": "input",
-                            "properties": {
-                                "type": "checkbox",
-                                "rel": tag
-                            }
-                        },
                         text(f" {tag}")
                     ],
-                    style=styles.get(category, DEFAULT_STYLE)
-                )
+                style=styles['packages']
+)
                 for tag in sorted(tag_lists["packages"])
             ]
         ],
