@@ -20,3 +20,6 @@ site:
   options:
     hide_toc: true
     hide_outline: true
+html:
+  extra_head:
+    - <script src="_static/custom.js"></script>
