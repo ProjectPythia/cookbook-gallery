@@ -1,14 +1,14 @@
 # See docs at: https://mystmd.org/guide/frontmatter
 version: 1
 extends:
-  - https://raw.githubusercontent.com/projectpythia-mystmd/pythia-config/main/pythia.yml
+  - https://raw.githubusercontent.com/projectpythia/pythia-config/main/pythia.yml
 project:
   id: 918580d4-663c-4ef5-93f6-7a8d01d943ed
   title: Project Pythia Cookbook Gallery
   # description:
   keywords: []
   authors: []
-  github: https://github.com/projectpythia-mystmd/cookbook-gallery
+  github: https://github.com/projectpythia/cookbook-gallery-myst
   # bibliography: []
   plugins:
     - type: executable
