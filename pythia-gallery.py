@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 import sys
 import json
 import urllib.request
@@ -32,44 +32,58 @@ def fetch_yaml(url: str):
     return yaml.load(body, yaml.SafeLoader)
 
 
-def render_cookbook(name: str):
+def fetch_cookbook_data(name):
+    """Fetch and return cookbook metadata from myst.yml and _gallery_info.yml."""
     try:
-        print(f"Rendering {name}", file=sys.stderr, flush=True)
-        raw_base_url = (
-            f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
-        )
-        config_url = f"{raw_base_url}/myst.yml"
-        book_url = f"https://projectpythia-mystmd.github.io/{name}"
+        print(f"Fetching metadata for {name}", file=sys.stderr, flush=True)
+        raw_base_url = f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
 
-        # Load JB data
+        # Load myst.yml
+        config_url = f"{raw_base_url}/myst.yml"
         config = fetch_yaml(config_url)
         title = config["project"]["title"]
 
-        # Fetch gallery metadata
+        # Load _gallery_info.yml
         gallery_url = f"{raw_base_url}/_gallery_info.yml"
         gallery_data = fetch_yaml(gallery_url)
-        image_name = gallery_data["thumbnail"]
-        image_url = f"{raw_base_url}/{image_name}"
 
-        # Build tags
-        tags = gallery_data["tags"]
+        # Extract image details and tags
+        image_url = f"{raw_base_url}/{gallery_data['thumbnail']}"
+        tags = gallery_data.get("tags", {})
 
         return {
+            "title": title,
+            "book_url": f"https://projectpythia-mystmd.github.io/{name}",
+            "image_url": image_url,
+            "tags": tags,  # Dictionary of {"domains": [...], "packages": [...]}
+        }
+
+    except Exception as err:
+        print(f"Error fetching data for {name}", file=sys.stderr)
+        traceback.print_exception(err, file=sys.stderr)
+        return None
+
+
+def render_cookbook(name, data):
+    """Render a cookbook card from fetched metadata."""
+    try:
+        print(f"Rendering {name}", file=sys.stderr, flush=True)
+        return {
             "type": "card",
-            "url": book_url,
+            "url": data["book_url"],
+            "class": ["tagged-card"] + [item for _, items in data["tags"].items() for item in items],
             "children": [
-                {"type": "cardTitle", "children": [text(title)]},
+                {"type": "cardTitle", "children": [text(data["title"])]},
                 div(
                     [
-                        image(image_url),
+                        image(data["image_url"]),
                         div(
                             [
                                 span(
                                     [text(item)],
-                                    style=styles.get(name, DEFAULT_STYLE),
+                                    style=styles.get(category, DEFAULT_STYLE),
                                 )
-                                for name, items in tags.items()
-                                if items is not None
+                                for category, items in data["tags"].items() if items
                                 for item in items
                             ]
                         ),
@@ -85,9 +99,67 @@ def render_cookbook(name: str):
 
 def render_cookbooks(pool):
     with open("cookbook_gallery.txt") as f:
-        body = f.read()
+        body = f.read().splitlines()
 
-    return [c for c in pool.map(render_cookbook, body.splitlines()) if c is not None]
+    # Fetch all cookbook data in parallel
+    cookbook_entries = list(pool.map(fetch_cookbook_data, body))
+
+    cookbook_data = {}
+    tag_lists = {"domains": set(), "packages": set()}
+
+    for name, data in zip(body, cookbook_entries):
+        if data:
+            cookbook_data[name] = render_cookbook(name, data)  # Use pre-fetched data
+            
+            # Collect tags into tag_lists
+            for category in tag_lists.keys():
+                tag_lists[category].update(data["tags"].get(category, []))
+                
+    cookbook_nodes = [cookbook_data[name] for name in body if name in cookbook_data]
+
+    # Generate checkboxes for domains
+    domains_controls = div(
+        [
+            span([text("Filter by Domain:")], style={"fontWeight": "bold"}),
+            *[
+                div(
+                    [
+                        #        f'<input type="checkbox" rel="{tag}">, ' {tag}'
+                        #       text(f" -[] {tag}")
+                        text(f" {tag}")
+                    ],
+                    style=styles['domains']
+                )
+                for tag in sorted(tag_lists["domains"])
+            ]
+        ],
+        **{"class": ["domains"]}
+    )
+
+    # Generate checkboxes for packages
+    packages_controls = div(
+        [
+            span([text("Filter by Package:")], style={"fontWeight": "bold"}),
+            *[
+                div(
+                    [
+                        text(f" {tag}")
+                    ],
+                style=styles['packages']
+)
+                for tag in sorted(tag_lists["packages"])
+            ]
+        ],
+        **{"class": ["packages"]}
+    )
+
+    # Combine both controls in a container
+    controls_node = div(
+        [domains_controls, packages_controls],
+        **{"class": ["filter-controls"]}
+    )
+    cookbook_nodes = [cookbook_data[name] for name in body if name in cookbook_data]
+    return controls_node, cookbook_nodes
 
 
 def run_directive(name, data):
@@ -97,18 +169,13 @@ def run_directive(name, data):
 
 def run_transform(name, data):
     with concurrent.futures.ThreadPoolExecutor() as pool:
-        # Find our cookbook nodes in the AST
         cookbook_nodes = find_all_by_type(data, "pythia-cookbooks")
-
-        # In-place mutate the AST to replace cookbook nodes with card grids
-        children = render_cookbooks(pool)
-
-        # Mutate our cookbook nodes in-place
+        controls_node, card_nodes = render_cookbooks(pool)
+        grid_node = grid([1, 1, 2, 3], card_nodes)
         for node in cookbook_nodes:
             node.clear()
-            node.update(grid([1, 1, 2, 3], children))
-            node["children"] = children
-
+            node["type"] = "container"
+            node["children"] = [controls_node, grid_node]
     return data
 
 
