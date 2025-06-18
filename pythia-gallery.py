@@ -36,10 +36,10 @@ def render_cookbook(name: str):
     try:
         print(f"Rendering {name}", file=sys.stderr, flush=True)
         raw_base_url = (
-            f"https://raw.githubusercontent.com/ProjectPythia-MystMD/{name}/main"
+            f"https://raw.githubusercontent.com/projectpythia/{name}/main"
         )
         config_url = f"{raw_base_url}/myst.yml"
-        book_url = f"https://projectpythia-mystmd.github.io/{name}"
+        book_url = f"https://projectpythia.org/{name}"
 
         # Load JB data
         config = fetch_yaml(config_url)
