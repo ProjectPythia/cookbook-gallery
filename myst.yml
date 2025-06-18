@@ -5,18 +5,13 @@ extends:
 project:
   id: 918580d4-663c-4ef5-93f6-7a8d01d943ed
   title: Project Pythia Cookbook Gallery
-  # description:
-  keywords: []
-  authors: []
-  github: https://github.com/projectpythia/cookbook-gallery-myst
-  # bibliography: []
+  github: https://github.com/projectpythia/cookbook-gallery
   plugins:
     - type: executable
       path: pythia-gallery.py
   toc:
     - file: root.md
 site:
-  template: book-theme
   options:
     hide_toc: true
     hide_outline: true
