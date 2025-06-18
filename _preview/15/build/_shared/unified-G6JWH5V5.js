@@ -1,1 +1,1 @@
-import{b as a}from"/cookbook-gallery/_preview/15/build/_shared/chunk-KXDZNNUH.js";import"/cookbook-gallery/_preview/15/build/_shared/chunk-J6FHCSRC.js";import"/cookbook-gallery/_preview/15/build/_shared/chunk-2NH4LW52.js";export{a as unified};
+import{b as a}from"/_preview/15/build/_shared/chunk-KXDZNNUH.js";import"/_preview/15/build/_shared/chunk-J6FHCSRC.js";import"/_preview/15/build/_shared/chunk-2NH4LW52.js";export{a as unified};

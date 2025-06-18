@@ -1,1 +1,1 @@
-import{a}from"/cookbook-gallery/_preview/15/build/_shared/chunk-LSMFIALG.js";import"/cookbook-gallery/_preview/15/build/_shared/chunk-DZADZCIM.js";import"/cookbook-gallery/_preview/15/build/_shared/chunk-2NH4LW52.js";export default a();
+import{a}from"/_preview/15/build/_shared/chunk-LSMFIALG.js";import"/_preview/15/build/_shared/chunk-DZADZCIM.js";import"/_preview/15/build/_shared/chunk-2NH4LW52.js";export default a();
