@@ -2,10 +2,15 @@
 import sys
 import json
 import urllib.request
+import urllib.error
+import urllib.parse
 import yaml
 import concurrent.futures
 import traceback
 import argparse
+import os
+
+from urllib.parse import urljoin
 
 from unist import *
 
@@ -25,6 +30,12 @@ styles = {
 }
 
 
+def debug(data):
+    if "PYTHIA_DEBUG" in os.environ:
+        print(data, file=sys.stderr)
+    return data
+
+
 def fetch_yaml(url: str):
     print(f"Fetching {url}", file=sys.stderr, flush=True)
     with urllib.request.urlopen(url) as response:
@@ -32,51 +43,76 @@ def fetch_yaml(url: str):
     return yaml.load(body, yaml.SafeLoader)
 
 
+def parse_project_tags(tags: list[str]):
+    """
+    Parse a list of "domain:tag" MyST tags into a mapping of tags by domain.
+    """
+    tags_by_domain = {}
+    for raw_tag in tags:
+        try:
+            domain, tag = raw_tag.split(":")
+        except ValueError:
+            continue
+
+        domain_tags = tags_by_domain.setdefault(domain, [])
+        domain_tags.append(tag)
+    return tags_by_domain
+
+
 def render_cookbook(name: str):
     try:
         print(f"Rendering {name}", file=sys.stderr, flush=True)
-        raw_base_url = (
-            f"https://raw.githubusercontent.com/projectpythia/{name}/main"
-        )
-        config_url = f"{raw_base_url}/myst.yml"
-        book_url = f"https://projectpythia.org/{name}"
+        raw_base_url = f"https://raw.githubusercontent.com/projectpythia/{name}/main/"
+        config_url = urljoin(raw_base_url, "myst.yml")
 
         # Load JB data
-        config = fetch_yaml(config_url)
-        title = config["project"]["title"]
+        myst_config = fetch_yaml(config_url)
+        project_config = myst_config["project"]
+        title = project_config["title"]
 
-        # Fetch gallery metadata
-        gallery_url = f"{raw_base_url}/_gallery_info.yml"
-        gallery_data = fetch_yaml(gallery_url)
-        image_name = gallery_data["thumbnail"]
-        image_url = f"{raw_base_url}/{image_name}"
+        # Fetch gallery metadata            # Fall back on gallery
+        try:
+            gallery_config = fetch_yaml(urljoin(raw_base_url, "_gallery_info.yml"))
+        except urllib.error.HTTPError as err:
+            if err.code != 404:
+                raise
 
-        # Build tags
-        tags = gallery_data["tags"]
+            # Pull out MyST-supported metadata
+            # TODO remove legacy _gallery_info config
+            image_url = urljoin(raw_base_url, project_config["thumbnail"])
+            tags = parse_project_tags(project_config["tags"])
+        else:
+            # Gallery and cookbook config files use same schema for gallery config
+            image_url = urljoin(raw_base_url, gallery_config["thumbnail"])
+            tags = gallery_config["tags"]
 
-        return {
-            "type": "card",
-            "url": book_url,
-            "children": [
-                {"type": "cardTitle", "children": [text(title)]},
-                div(
-                    [
-                        image(image_url),
-                        div(
-                            [
-                                span(
-                                    [text(item)],
-                                    style=styles.get(name, DEFAULT_STYLE),
-                                )
-                                for name, items in tags.items()
-                                if items is not None
-                                for item in items
-                            ]
-                        ),
-                    ],
-                ),
-            ],
-        }
+        book_url = urljoin("https://projectpythia.org", name)
+
+        return debug(
+            {
+                "type": "card",
+                "url": book_url,
+                "children": [
+                    {"type": "cardTitle", "children": [text(title)]},
+                    div(
+                        [
+                            image(image_url),
+                            div(
+                                [
+                                    span(
+                                        [text(item)],
+                                        style=styles.get(name, DEFAULT_STYLE),
+                                    )
+                                    for name, items in tags.items()
+                                    if items is not None
+                                    for item in items
+                                ]
+                            ),
+                        ],
+                    ),
+                ],
+            }
+        )
     except Exception as err:
         print(f"\n\nError rendering {name}", file=sys.stderr)
         traceback.print_exception(err, file=sys.stderr)
