@@ -24,3 +24,4 @@ eo-datascience-cookbook
 healpix-cookbook
 metpy-cookbook
 osdf-cookbook
+snow-observations-cookbook
