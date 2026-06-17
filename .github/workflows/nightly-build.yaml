@@ -11,11 +11,16 @@ jobs:
     uses: ProjectPythia/cookbook-actions/.github/workflows/build-book.yaml@main
     with:
         base_url: ''
+        path_to_notebooks: docs # the site lives in the docs/ subdirectory
 
   deploy:
     needs: build
     uses: ProjectPythia/cookbook-actions/.github/workflows/deploy-book.yaml@main
+    with:
+        publish_dir: docs/_build/html # ...so the built site is under docs/
 
   link-check:
     if: ${{ github.repository_owner == 'ProjectPythia' }}
     uses: ProjectPythia/cookbook-actions/.github/workflows/link-checker.yaml@main
+    with:
+        path_to_notebooks: docs
