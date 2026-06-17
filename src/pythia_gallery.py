@@ -18,11 +18,15 @@ PLACEHOLDER = "listingPlaceholder"  # myst-listing's node type
 # Resolve the repo-root list relative to this file, not the current directory,
 # so the plugin works whether myst runs from the repo root or from docs/.
 COOKBOOKS = pathlib.Path(__file__).resolve().parent.parent / "cookbook_gallery.txt"
+# Collected metadata is cached here, under the site's _build/ (CWD is the
+# project root). Keeps rebuilds from re-fetching every repo every time.
+CACHE = pathlib.Path("_build") / "pythia-gallery.json"
 
 
 def fetch_yaml(url):
     print(f"Fetching {url}", file=sys.stderr, flush=True)
-    with urllib.request.urlopen(url) as response:
+    # timeout so one stalled host can't hang the whole build forever.
+    with urllib.request.urlopen(url, timeout=30) as response:
         return yaml.load(response.read().decode(), yaml.SafeLoader)
 
 
@@ -62,10 +66,18 @@ def collect_cookbook(name):
 
 
 def collect_cookbooks():
+    # Reuse the cache until cookbook_gallery.txt changes; delete _build (or that
+    # file) to force a full refresh. CI starts from a clean _build, so it always
+    # fetches fresh.
+    if CACHE.is_file() and CACHE.stat().st_mtime >= COOKBOOKS.stat().st_mtime:
+        return json.loads(CACHE.read_text())
     with open(COOKBOOKS) as f:
         names = f.read().splitlines()
     with concurrent.futures.ThreadPoolExecutor() as pool:
-        return [c for c in pool.map(collect_cookbook, names) if c is not None]
+        items = [c for c in pool.map(collect_cookbook, names) if c is not None]
+    CACHE.parent.mkdir(parents=True, exist_ok=True)
+    CACHE.write_text(json.dumps(items))
+    return items
 
 
 def find_all_by_type(parent, type_):

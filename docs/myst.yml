@@ -10,7 +10,7 @@ project:
     - type: executable
       path: ../src/pythia_gallery.py
     # myst-listing renders the gallery (released plugin; see developing.md).
-    - https://github.com/myst-contrib/myst-listing/releases/download/v0.1.0/plugin.mjs
+    - https://github.com/myst-contrib/myst-listing/releases/latest/download/plugin.mjs
     # searchfilter adds the live filter box above the gallery.
     - https://raw.githubusercontent.com/jupyter-book/myst-plugins/main/plugins/searchfilter/searchfilter.mjs
   toc:
