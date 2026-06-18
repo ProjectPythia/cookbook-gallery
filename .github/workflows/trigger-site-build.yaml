@@ -8,4 +8,6 @@ jobs:
     with:
       artifact_name: book-zip-${{ github.event.number }}
       base_url: '/_preview/${{ github.event.number }}'
-      # Other input options are possible, see ProjectPythia/cookbook-actions/.github/workflows/build-book.yaml
+      # The site is in docs/, but cookbook-actions zips & deploys _build/html from
+      # the repo root — so build in docs/ and move the output up to match.
+      build_command: 'cd docs && myst build --execute --html && mv _build ..'

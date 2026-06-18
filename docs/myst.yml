@@ -1,0 +1,22 @@
+version: 1
+extends:
+  - https://raw.githubusercontent.com/projectpythia/pythia-config/main/pythia.yml
+project:
+  id: 918580d4-663c-4ef5-93f6-7a8d01d943ed
+  title: Project Pythia Cookbook Gallery
+  github: https://github.com/projectpythia/cookbook-gallery
+  # Paths are relative to this docs/ folder (the site root).
+  plugins:
+    - type: executable
+      path: ../src/pythia_gallery.py
+    # myst-listing renders the gallery (released plugin; see developing.md).
+    - https://github.com/myst-contrib/myst-listing/releases/latest/download/plugin.mjs
+    # searchfilter adds the live filter box above the gallery.
+    - https://raw.githubusercontent.com/jupyter-book/myst-plugins/main/plugins/searchfilter/searchfilter.mjs
+  toc:
+    - file: index.md
+    - file: developing.md
+site:
+  options:
+    hide_toc: true
+    hide_outline: true

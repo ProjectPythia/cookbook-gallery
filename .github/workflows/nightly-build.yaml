@@ -11,6 +11,9 @@ jobs:
     uses: ProjectPythia/cookbook-actions/.github/workflows/build-book.yaml@main
     with:
         base_url: ''
+        # Build the docs/ site, then move its output to the repo-root _build/html
+        # that cookbook-actions zips & deploys.
+        build_command: 'cd docs && myst build --execute --html && mv _build ..'
 
   deploy:
     needs: build
@@ -19,3 +22,5 @@ jobs:
   link-check:
     if: ${{ github.repository_owner == 'ProjectPythia' }}
     uses: ProjectPythia/cookbook-actions/.github/workflows/link-checker.yaml@main
+    with:
+        path_to_notebooks: docs
