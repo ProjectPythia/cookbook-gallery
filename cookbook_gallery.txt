@@ -25,3 +25,4 @@ healpix-cookbook
 metpy-cookbook
 osdf-cookbook
 snow-observations-cookbook
+gdex-cookbook
