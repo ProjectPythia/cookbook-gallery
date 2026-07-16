@@ -4,6 +4,9 @@
 Every cookbook is rebuilt nightly. This table tracks each book's health.
 Click a cookbook to open its workflow runs on GitHub.[^fn]
 
+:::{searchfilter} .myst-listing-item
+:::
+
 :::{listing}
 :source: pythia-status
 :display: table
