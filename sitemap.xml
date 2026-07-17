@@ -5,6 +5,9 @@
     <loc>http://localhost:3000</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/status</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/developing</loc>
   </url>
 </urlset>
