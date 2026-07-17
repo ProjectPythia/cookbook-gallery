@@ -1,7 +1,9 @@
 # Cookbooks Gallery
 
 Pythia Cookbooks provide example workflows on more advanced and domain-specific problems developed by the Pythia community. Click each card below to see its cookbook.
-Cookbooks build on top of skills you learn in [Pythia Foundations](https://foundations.projectpythia.org/),you can [learn about cookbooks here](#about).
+Cookbooks build on top of skills you learn in [Pythia Foundations](https://foundations.projectpythia.org/), you can [learn about cookbooks here](#about).[^status]
+
+[^status]: Each book's build health is tracked on the [status page](#nightly-build-status).
 
 :::{searchfilter} .myst-listing-gallery .myst-card
 :::
