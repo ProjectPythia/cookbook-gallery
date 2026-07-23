@@ -12,9 +12,6 @@ jobs:
     with:
         base_url: ''
         path_to_notebooks: docs
-        # The site is in docs/, but cookbook-actions zips & deploys _build/html from
-        # the repo root — so build in docs/ and move the output up to match.
-        build_command: 'myst build --execute --html && mv _build ..'
 
   deploy:
     needs: build
