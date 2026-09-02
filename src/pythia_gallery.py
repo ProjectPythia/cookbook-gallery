@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
-"""Pythia gallery: a `pythia` source for the myst-listing plugin.
+"""Pythia gallery: `pythia` sources for the myst-listing plugin.
 
-Use it as `:::{listing}` with `:source: pythia`. Our document-stage transform
-fills any such placeholder's `items` with one entry per cookbook; myst-listing
-then renders the gallery. See docs/developing.md.
+Use `:::{listing}` with `:source: pythia` (the gallery cards) or
+`:source: pythia-status` (the build status table). Our document-stage
+transform fills any such placeholder's `items` with one entry per cookbook;
+myst-listing then renders them. See docs/developing.md.
 """
 import sys
+import datetime
 import json
+import re
 import urllib.request
 import yaml
 import concurrent.futures
@@ -23,11 +26,15 @@ COOKBOOKS = pathlib.Path(__file__).resolve().parent.parent / "cookbook_gallery.t
 CACHE = pathlib.Path("_build") / "pythia-gallery.json"
 
 
-def fetch_yaml(url):
+def fetch_text(url):
     print(f"Fetching {url}", file=sys.stderr, flush=True)
     # timeout so one stalled host can't hang the whole build forever.
     with urllib.request.urlopen(url, timeout=30) as response:
-        return yaml.load(response.read().decode(), yaml.SafeLoader)
+        return response.read().decode()
+
+
+def fetch_yaml(url):
+    return yaml.load(fetch_text(url), yaml.SafeLoader)
 
 
 def fetch_abstract(name, raw):
@@ -42,17 +49,62 @@ def fetch_abstract(name, raw):
         return None
 
 
+def fetch_build_status(name):
+    """The cookbook's nightly build status ("✅ passing"/"❌ failing"), or None.
+
+    Parsed from the Actions badge SVG, which embeds the status as text and
+    needs no auth or API rate limit. "no status" (workflow disabled or never
+    run) and fetch errors both mean None: a blank cell in the status table.
+    """
+    url = f"https://github.com/ProjectPythia/{name}/actions/workflows/nightly-build.yaml/badge.svg"
+    try:
+        svg = fetch_text(url)
+        for status, mark in (("passing", "✅"), ("failing", "❌")):
+            if status in svg:
+                return f"{mark} {status}"
+    except Exception as err:
+        print(f"  no nightly badge for {name}: {err}", file=sys.stderr)
+    return None
+
+
+def fetch_deploy_date(name):
+    """The date ("YYYY-MM-DD") the cookbook's book was last deployed, or None.
+
+    Read from the public Atom feed of the repo's gh-pages branch (its newest
+    commit is the last successful deploy), so no API token is needed.
+    """
+    url = f"https://github.com/ProjectPythia/{name}/commits/gh-pages.atom"
+    try:
+        match = re.search(r"<updated>(\d{4}-\d{2}-\d{2})", fetch_text(url))
+        return match and match.group(1)
+    except Exception as err:
+        print(f"  no gh-pages feed for {name}: {err}", file=sys.stderr)
+        return None
+
+
 def collect_cookbook(name):
     """Fetch one cookbook's metadata as a myst-listing item (or None on error)."""
     try:
         raw = f"https://raw.githubusercontent.com/projectpythia/{name}/main"
         project = fetch_yaml(f"{raw}/myst.yml")["project"]
         gallery = fetch_yaml(f"{raw}/_gallery_info.yml")
+        status = fetch_build_status(name)
+        updated = fetch_deploy_date(name)
+        # A book that has stopped deploying is not working.
+        # A disabled workflow keeps serving its last (stale) badge.
+        # The week of grace forgives transient CI outages between nightlies.
+        week_ago = datetime.date.today() - datetime.timedelta(days=7)
+        if updated is None or datetime.date.fromisoformat(updated) < week_ago:
+            status = "⚠️ no longer updating"
         return {
             # Tag categories (domains/packages/events) pass through as their own
             # fields so myst-listing's :tag-fields: renders each as a colored
             # group. Spread first, so our explicit fields below always win.
             **(gallery.get("tags") or {}),
+            # For the status table; not shown on the gallery cards.
+            "build": status,
+            "updated": updated,
+            "name": name,
             "title": project["title"],
             # The cookbook's own description if set, else its CITATION.cff abstract.
             "description": project.get("description") or fetch_abstract(name, raw),
@@ -80,6 +132,20 @@ def collect_cookbooks():
     return items
 
 
+def status_items(items):
+    """Rows for `:source: pythia-status`: the title links to the nightly workflow."""
+    return [
+        {
+            "title": item["title"],
+            "build": item.get("build"),
+            "updated": item.get("updated"),
+            "url": f"https://github.com/ProjectPythia/{item['name']}"
+            "/actions/workflows/nightly-build.yaml",
+        }
+        for item in items
+    ]
+
+
 def find_all_by_type(parent, type_):
     for node in parent.get("children", []):
         if node.get("type") == type_:
@@ -91,12 +157,14 @@ def run_transform(data):
     nodes = [
         node
         for node in find_all_by_type(data, PLACEHOLDER)
-        if node.get("source") == "pythia"
+        if node.get("source") in ("pythia", "pythia-status")
     ]
     if nodes:
         items = collect_cookbooks()
         for node in nodes:
-            node["items"] = items
+            node["items"] = (
+                status_items(items) if node["source"] == "pythia-status" else items
+            )
     return data
 
 

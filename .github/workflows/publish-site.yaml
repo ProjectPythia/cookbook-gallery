@@ -11,11 +11,11 @@ jobs:
   build:
     uses: ProjectPythia/cookbook-actions/.github/workflows/build-book.yaml@main
     with:
-        base_url: ''
-        # Build the docs/ site, then move its output to the repo-root _build/html
-        # that cookbook-actions zips & deploys.
-        build_command: 'cd docs && myst build --execute --html && mv _build ..'
+      base_url: ''
+      path_to_notebooks: docs
 
   deploy:
     needs: build
     uses: ProjectPythia/cookbook-actions/.github/workflows/deploy-book.yaml@main
+    with:
+      publish_dir: 'docs/_build/html'

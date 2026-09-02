@@ -15,6 +15,7 @@ project:
     - https://raw.githubusercontent.com/jupyter-book/myst-plugins/main/plugins/searchfilter/searchfilter.mjs
   toc:
     - file: index.md
+    - file: status.md
     - file: developing.md
 site:
   options:
