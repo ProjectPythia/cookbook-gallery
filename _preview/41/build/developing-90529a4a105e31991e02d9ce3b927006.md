@@ -40,9 +40,8 @@ The card's **title** comes from your cookbook's `myst.yml` (`project.title`), an
 | Tags | `_gallery_info.yml` → `tags` (each category becomes a colored pill group) |
 | Link | `https://projectpythia.org/<repo-name>` |
 
-Each tag category (`domains`, `packages`, `events`) is passed through as its own
-item field, and the listing's `:tag-fields: domains,packages,events` renders each
-as a separately-colored group of pills. Add a category to that list to show it.
+Each tag category (`domains`, `packages`, `events`) is passed through as its own item field, and the listing's `:tag-fields: domains,packages,events` renders each as a separately-colored group of pills.
+Add a category to that list to show it.
 
 ## How it works
 
@@ -52,6 +51,7 @@ as a separately-colored group of pills. Add a category to that list to show it.
 
 So `src/pythia_gallery.py` is **only** a collector: it never defines a directive or renders anything.
 `:source: pythia` plugs straight into the standard `{listing}` directive and all its options, and myst-listing's own collector ignores our source — so there's no conflict.
+The [status page](#nightly-build-status) is filled the same way through a second source (`:source: pythia-status`) whose rows link each book to its nightly workflow.
 
 The collected metadata is cached in `docs/_build/pythia-gallery.json` so rebuilds (including `myst start`'s hot reload) don't re-fetch every repo. It refreshes when you edit `cookbook_gallery.txt`; delete `docs/_build` to force a full refresh. CI starts from a clean `_build`, so deploys always fetch fresh.
 

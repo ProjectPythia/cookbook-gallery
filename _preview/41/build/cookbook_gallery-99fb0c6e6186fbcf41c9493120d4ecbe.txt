@@ -27,4 +27,6 @@ osdf-cookbook
 snow-observations-cookbook
 gdex-cookbook
 feature-tracking-cookbook
+mpas-jedi-cookbook
+spectral-analysis-cookbook
 great-circle-cookbook
