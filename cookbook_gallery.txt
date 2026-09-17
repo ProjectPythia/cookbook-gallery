@@ -29,4 +29,5 @@ gdex-cookbook
 feature-tracking-cookbook
 mpas-jedi-cookbook
 spectral-analysis-cookbook
+nsdf-openvisus-cookbook
 METAR_archive-cookbook
