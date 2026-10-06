@@ -30,3 +30,4 @@ feature-tracking-cookbook
 mpas-jedi-cookbook
 spectral-analysis-cookbook
 METAR_archive-cookbook
+api-cookbook
