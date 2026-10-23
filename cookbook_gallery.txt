@@ -31,3 +31,4 @@ mpas-jedi-cookbook
 spectral-analysis-cookbook
 great-circle-cookbook
 METAR_archive-cookbook
+nsdf-openvisus-cookbook
