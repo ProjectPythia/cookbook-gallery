@@ -32,3 +32,4 @@ spectral-analysis-cookbook
 METAR_archive-cookbook
 api-cookbook
 great-circle-cookbook
+nsdf-openvisus-cookbook
